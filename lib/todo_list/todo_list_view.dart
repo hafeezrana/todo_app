@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/todo_list/add_todo_view.dart';
 import 'package:todo_app/todo_list/todo_list_controller.dart';
+import 'package:todo_app/todo_list/update_todo_view.dart';
 
 class TodoListView extends StatelessWidget {
   const TodoListView({
@@ -21,6 +22,16 @@ class TodoListView extends StatelessWidget {
         itemBuilder: (context, index) {
           final todo = todoListController.todos[index];
           return ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UpdateTodoView(
+                    todoListController: todoListController,
+                  ),
+                ),
+              );
+            },
             title: Text(todo.task),
             trailing: IconButton(
               icon: const Icon(Icons.delete_forever),
