@@ -7,17 +7,17 @@ class TodoListController with ChangeNotifier {
   List<Todo> get todos => _todos;
 
   void createTodo(Todo todo) {
-    _todos.add(todo);
+    _todos.insert(0, todo);
     notifyListeners();
   }
 
-  void updateTodo(Todo todo) {
-    _todos.add(todo);
+  void updateTodo(int index, Todo todo) {
+    _todos[index] = todo;
     notifyListeners();
   }
 
-  void removeTodo(Todo todo) {
-    _todos.remove(todo);
+  void removeTodo(int index) {
+    _todos.removeAt(index);
     notifyListeners();
   }
 }

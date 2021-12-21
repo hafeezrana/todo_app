@@ -6,9 +6,11 @@ class UpdateTodoView extends StatefulWidget {
   const UpdateTodoView({
     Key? key,
     required this.todoListController,
+    required this.currentIndex,
   }) : super(key: key);
 
   final TodoListController todoListController;
+  final int currentIndex;
 
   @override
   _UpdateTodoViewState createState() => _UpdateTodoViewState();
@@ -49,7 +51,10 @@ class _UpdateTodoViewState extends State<UpdateTodoView> {
             TextButton(
               onPressed: () {
                 final updatedTodo = Todo(task: taskController.text);
-                widget.todoListController.updateTodo(updatedTodo);
+                widget.todoListController.updateTodo(
+                  widget.currentIndex,
+                  updatedTodo,
+                );
                 Navigator.pop(context);
               },
               child: const Text('Update'),

@@ -28,6 +28,7 @@ class TodoListView extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => UpdateTodoView(
                     todoListController: todoListController,
+                    currentIndex: index,
                   ),
                 ),
               );
@@ -36,7 +37,7 @@ class TodoListView extends StatelessWidget {
             trailing: IconButton(
               icon: const Icon(Icons.delete_forever),
               onPressed: () {
-                todoListController.removeTodo(todo);
+                todoListController.removeTodo(index);
               },
             ),
           );
