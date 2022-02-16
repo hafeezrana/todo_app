@@ -1,16 +1,34 @@
-// This is an example unit test.
-//
-// A unit test tests a single function, method, or class. To learn more about
-// writing unit tests, visit
-// https://flutter.dev/docs/cookbook/testing/unit/introduction
-
 import 'package:flutter_test/flutter_test.dart';
+import 'package:todo_app/models/todo.dart';
 import 'package:todo_app/todo_list/todo_controller.dart';
 
 void main() {
-  final todoListController = TodoController();
-  test('initially todo list should be empty', () {
-    todoListController.todos;
-    expect(todoListController.todos, []);
+  final controller = TodoController();
+
+  test('todo list should be initially empty', () {
+    expect(controller.todos.length, 0);
+  });
+
+  test('new todo should be created', () {
+    controller.createTodo(Todo(task: 'Have to do unit test'));
+    expect(controller.todos, [Todo(task: 'Have to do unit test')]);
+    expect(controller.todos.length, 1);
+  });
+
+  test('existing todo should be updated', () {
+    final existingTodo = controller.todos.indexWhere(
+      (todo) => todo == Todo(task: 'Have to do unit test'),
+    );
+    controller.updateTodo(existingTodo, Todo(task: 'Have to do publish app'));
+    expect(controller.todos, [Todo(task: 'Have to do publish app')]);
+    expect(controller.todos.length, 1);
+  });
+
+  test('existing todo should be removed', () {
+    final existingTodo = controller.todos.indexWhere(
+      (todo) => todo == Todo(task: 'Have to do publish app'),
+    );
+    controller.removeTodo(existingTodo);
+    expect(controller.todos.length, 0);
   });
 }
