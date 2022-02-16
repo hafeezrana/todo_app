@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/todo.dart';
-import 'package:todo_app/todo_list/todo_list_controller.dart';
 
-class UpdateTodoView extends StatefulWidget {
-  const UpdateTodoView({
+import 'todo_provider.dart';
+
+class EditTodoView extends StatefulWidget {
+  const EditTodoView({
     Key? key,
-    required this.todoListController,
+    required this.todo,
     required this.currentIndex,
   }) : super(key: key);
 
-  final TodoListController todoListController;
+  final Todo todo;
   final int currentIndex;
 
   @override
-  _UpdateTodoViewState createState() => _UpdateTodoViewState();
+  _EditTodoViewState createState() => _EditTodoViewState();
 }
 
-class _UpdateTodoViewState extends State<UpdateTodoView> {
+class _EditTodoViewState extends State<EditTodoView> {
   final taskController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    taskController.text = widget.todo.task;
+  }
 
   @override
   void dispose() {
@@ -27,6 +34,7 @@ class _UpdateTodoViewState extends State<UpdateTodoView> {
 
   @override
   Widget build(BuildContext context) {
+    final todoController = TodoProvider.of(context).todoController;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Update Todo'),
@@ -48,13 +56,14 @@ class _UpdateTodoViewState extends State<UpdateTodoView> {
             const SizedBox(
               height: 20,
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 final updatedTodo = Todo(task: taskController.text);
-                widget.todoListController.updateTodo(
+                todoController.updateTodo(
                   widget.currentIndex,
                   updatedTodo,
                 );
+
                 Navigator.pop(context);
               },
               child: const Text('Update'),

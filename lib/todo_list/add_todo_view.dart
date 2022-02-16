@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/todo.dart';
-import 'package:todo_app/todo_list/todo_list_controller.dart';
+import 'package:todo_app/todo_list/todo_provider.dart';
 
 class AddTodoView extends StatefulWidget {
   const AddTodoView({
     Key? key,
-    required this.todoListController,
   }) : super(key: key);
-
-  final TodoListController todoListController;
 
   @override
   _AddTodoViewState createState() => _AddTodoViewState();
 }
 
 class _AddTodoViewState extends State<AddTodoView> {
-  TextEditingController taskController = TextEditingController();
+  final taskController = TextEditingController();
 
   @override
   void dispose() {
@@ -25,6 +22,7 @@ class _AddTodoViewState extends State<AddTodoView> {
 
   @override
   Widget build(BuildContext context) {
+    final todoController = TodoProvider.of(context).todoController;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Todo'),
@@ -46,10 +44,12 @@ class _AddTodoViewState extends State<AddTodoView> {
             const SizedBox(
               height: 20,
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 final createdTodo = Todo(task: taskController.text);
-                widget.todoListController.createTodo(createdTodo);
+                setState(() {
+                  todoController.createTodo(createdTodo);
+                });
                 Navigator.pop(context);
               },
               child: const Text('Add'),

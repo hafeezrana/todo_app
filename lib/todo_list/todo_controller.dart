@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:todo_app/models/todo.dart';
 
-class TodoListController with ChangeNotifier {
+class TodoController with ChangeNotifier {
   final List<Todo> _todos = [];
 
   List<Todo> get todos => _todos;
@@ -18,6 +18,11 @@ class TodoListController with ChangeNotifier {
 
   void removeTodo(int index) {
     _todos.removeAt(index);
+    notifyListeners();
+  }
+
+  void removeAllTodo() {
+    _todos.clear();
     notifyListeners();
   }
 }
