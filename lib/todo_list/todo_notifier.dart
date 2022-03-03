@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:todo_app/models/todo.dart';
 
-class TodoController with ChangeNotifier {
+class TodoNotifier with ChangeNotifier {
   final List<Todo> _todos = [];
 
   List<Todo> get todos => _todos;

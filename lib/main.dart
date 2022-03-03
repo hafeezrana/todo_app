@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/todo_list/todo_controller.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/todo_list/todo_list_view.dart';
-import 'package:todo_app/todo_list/todo_provider.dart';
+import 'package:todo_app/todo_list/todo_notifier.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => TodoNotifier(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,16 +17,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TodoProvider(
-      todoController: TodoController(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Todo App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const TodoListView(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Todo App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: const TodoListView(),
     );
   }
 }

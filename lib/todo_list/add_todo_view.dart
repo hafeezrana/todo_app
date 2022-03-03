@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/todo.dart';
-import 'package:todo_app/todo_list/todo_provider.dart';
+import 'package:todo_app/todo_list/todo_notifier.dart';
 
 class AddTodoView extends StatefulWidget {
   const AddTodoView({
@@ -22,7 +23,6 @@ class _AddTodoViewState extends State<AddTodoView> {
 
   @override
   Widget build(BuildContext context) {
-    final todoController = TodoProvider.of(context).todoController;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Todo'),
@@ -47,9 +47,7 @@ class _AddTodoViewState extends State<AddTodoView> {
             ElevatedButton(
               onPressed: () {
                 final createdTodo = Todo(task: taskController.text);
-                setState(() {
-                  todoController.createTodo(createdTodo);
-                });
+                context.read<TodoNotifier>().createTodo(createdTodo);
                 Navigator.pop(context);
               },
               child: const Text('Add'),
