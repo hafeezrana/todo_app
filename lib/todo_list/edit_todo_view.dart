@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/todo.dart';
 
-import 'todo_provider.dart';
+import 'todo_notifier.dart';
 
 class EditTodoView extends StatefulWidget {
   const EditTodoView({
@@ -34,7 +35,6 @@ class _EditTodoViewState extends State<EditTodoView> {
 
   @override
   Widget build(BuildContext context) {
-    final todoController = TodoProvider.of(context).todoController;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Update Todo'),
@@ -59,10 +59,10 @@ class _EditTodoViewState extends State<EditTodoView> {
             ElevatedButton(
               onPressed: () {
                 final updatedTodo = Todo(task: taskController.text);
-                todoController.updateTodo(
-                  widget.currentIndex,
-                  updatedTodo,
-                );
+                context.read<TodoNotifier>().updateTodo(
+                      widget.currentIndex,
+                      updatedTodo,
+                    );
 
                 Navigator.pop(context);
               },

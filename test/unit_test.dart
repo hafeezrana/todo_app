@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_app/models/todo.dart';
-import 'package:todo_app/todo_list/todo_controller.dart';
+import 'package:todo_app/todo_list/todo_notifier.dart';
 
 void main() {
-  final controller = TodoController();
+  final controller = TodoNotifier();
 
   test('todo list should be initially empty', () {
     expect(controller.todos.length, 0);
