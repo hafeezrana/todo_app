@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todo_app/models/todo.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/todo_list/todo_notifier.dart';
 
-class AddTodoView extends StatefulWidget {
+class AddTodoView extends ConsumerStatefulWidget {
   const AddTodoView({
     Key? key,
   }) : super(key: key);
@@ -12,7 +11,7 @@ class AddTodoView extends StatefulWidget {
   _AddTodoViewState createState() => _AddTodoViewState();
 }
 
-class _AddTodoViewState extends State<AddTodoView> {
+class _AddTodoViewState extends ConsumerState<AddTodoView> {
   final taskController = TextEditingController();
 
   @override
@@ -46,8 +45,9 @@ class _AddTodoViewState extends State<AddTodoView> {
             ),
             ElevatedButton(
               onPressed: () {
-                final createdTodo = Todo(task: taskController.text);
-                context.read<TodoNotifier>().createTodo(createdTodo);
+                ref
+                    .read(todoNotifierProvider.notifier)
+                    .createTodo(taskController.text);
                 Navigator.pop(context);
               },
               child: const Text('Add'),

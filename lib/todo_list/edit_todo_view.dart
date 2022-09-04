@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/models/todo.dart';
 
 import 'todo_notifier.dart';
 
-class EditTodoView extends StatefulWidget {
-  const EditTodoView({
-    Key? key,
-    required this.todo,
-    required this.currentIndex,
-  }) : super(key: key);
+class EditTodoView extends ConsumerStatefulWidget {
+  const EditTodoView({Key? key, required this.todo}) : super(key: key);
 
   final Todo todo;
-  final int currentIndex;
 
   @override
   _EditTodoViewState createState() => _EditTodoViewState();
 }
 
-class _EditTodoViewState extends State<EditTodoView> {
+class _EditTodoViewState extends ConsumerState<EditTodoView> {
   final taskController = TextEditingController();
 
   @override
@@ -58,10 +53,9 @@ class _EditTodoViewState extends State<EditTodoView> {
             ),
             ElevatedButton(
               onPressed: () {
-                final updatedTodo = Todo(task: taskController.text);
-                context.read<TodoNotifier>().updateTodo(
-                      widget.currentIndex,
-                      updatedTodo,
+                ref.read(todoNotifierProvider.notifier).updateTodo(
+                      id: widget.todo.id!,
+                      task: taskController.text,
                     );
 
                 Navigator.pop(context);

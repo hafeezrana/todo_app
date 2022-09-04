@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/todo_list/todo_list_view.dart';
-import 'package:todo_app/todo_list/todo_notifier.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => TodoNotifier(),
-      child: const MyApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
